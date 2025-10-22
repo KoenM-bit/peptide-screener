@@ -29,27 +29,30 @@ export function LoginPage({ onLogin }: LoginPageProps) {
             <Lock className="w-12 h-12 text-blue-500" />
           </div>
           <h1 className="text-2xl font-bold">TEIPP Peptide Analyzer</h1>
-          <p className="text-gray-600 mt-2">Please enter the password to continue</p>
+          <p className="text-gray-600 mt-2">
+            Please enter the password to continue
+          </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700"
+            >
               Password
             </label>
             <input
               type="password"
               id="password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={e => setPassword(e.target.value)}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
               placeholder="Enter password"
             />
           </div>
 
-          {error && (
-            <div className="text-red-500 text-sm">{error}</div>
-          )}
+          {error && <div className="text-red-500 text-sm">{error}</div>}
 
           <button
             type="submit"

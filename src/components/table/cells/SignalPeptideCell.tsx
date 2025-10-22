@@ -5,17 +5,16 @@ interface SignalPeptideProps {
   fragment: string;
 }
 
-export function SignalPeptideCell({ signalPeptide, fragment }: SignalPeptideProps) {
+export function SignalPeptideCell({
+  signalPeptide,
+  fragment,
+}: SignalPeptideProps) {
   if (!signalPeptide) {
-    return (
-      <div className="text-gray-500 italic">
-        No signal peptide
-      </div>
-    );
+    return <div className="text-gray-500 italic">No signal peptide</div>;
   }
 
   const fragmentStart = signalPeptide.indexOf(fragment);
-  
+
   if (fragmentStart === -1) {
     return (
       <div className="font-mono text-sm">

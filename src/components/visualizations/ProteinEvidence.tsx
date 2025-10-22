@@ -7,7 +7,11 @@ interface ProteinEvidenceProps {
   tissueDistribution: string;
 }
 
-export function ProteinEvidence({ evidence, tissueSpecificity, tissueDistribution }: ProteinEvidenceProps) {
+export function ProteinEvidence({
+  evidence,
+  tissueSpecificity,
+  tissueDistribution,
+}: ProteinEvidenceProps) {
   const getEvidenceIcon = () => {
     switch (evidence) {
       case 'Evidence at protein level':

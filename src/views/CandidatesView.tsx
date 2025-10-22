@@ -10,10 +10,11 @@ import { exportToCsv } from '../utils/exportUtils';
 export function CandidatesView() {
   const { peptideList } = usePeptideData();
   const { likedPeptides } = useLikedPeptides();
-  const [selectedPeptide, setSelectedPeptide] = useState<FlatPeptideData | null>(null);
+  const [selectedPeptide, setSelectedPeptide] =
+    useState<FlatPeptideData | null>(null);
 
   // Filter peptide list to only show liked peptides
-  const candidatePeptides = peptideList.filter(peptide => 
+  const candidatePeptides = peptideList.filter(peptide =>
     likedPeptides.has(peptide.fragment)
   );
 
@@ -30,7 +31,8 @@ export function CandidatesView() {
             No Candidate Peptides Yet
           </h2>
           <p className="text-gray-600">
-            Like peptides in the analysis view to add them to your candidates list.
+            Like peptides in the analysis view to add them to your candidates
+            list.
           </p>
         </div>
       </div>
@@ -53,10 +55,7 @@ export function CandidatesView() {
             Export CSV
           </button>
         </div>
-        <DataTable 
-          data={candidatePeptides}
-          onRowClick={setSelectedPeptide}
-        />
+        <DataTable data={candidatePeptides} onRowClick={setSelectedPeptide} />
       </div>
 
       {selectedPeptide && (

@@ -18,11 +18,11 @@ export function usePeptideData() {
       setLoading(true);
       setError(null);
       setProgress(null);
-      
-      const peptideData = await loadPeptideData((progressInfo) => {
+
+      const peptideData = await loadPeptideData(progressInfo => {
         setProgress(progressInfo);
       });
-      
+
       setData(peptideData);
     } catch (err) {
       console.error('Error loading data:', err);
@@ -46,6 +46,6 @@ export function usePeptideData() {
     loading,
     error,
     progress,
-    refetch: loadData
+    refetch: loadData,
   };
 }

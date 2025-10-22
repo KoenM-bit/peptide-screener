@@ -18,9 +18,14 @@ export function CancerTooltip({ active, payload, label }: TooltipProps) {
       <h4 className="font-medium text-gray-900 mb-2">{label}</h4>
       {payload.map((item, index: number) => {
         const dataset = item.dataKey.includes('tcga') ? 'TCGA' : 'Validation';
-        const color = dataset === 'TCGA' ? 'rgb(59, 130, 246)' : 'rgb(234, 88, 12)';
-        const samples = item.payload[dataset === 'TCGA' ? 'tcgaSamples' : 'validationSamples'];
-        const stdDev = item.payload[dataset === 'TCGA' ? 'tcgaStdDev' : 'validationStdDev'];
+        const color =
+          dataset === 'TCGA' ? 'rgb(59, 130, 246)' : 'rgb(234, 88, 12)';
+        const samples =
+          item.payload[
+            dataset === 'TCGA' ? 'tcgaSamples' : 'validationSamples'
+          ];
+        const stdDev =
+          item.payload[dataset === 'TCGA' ? 'tcgaStdDev' : 'validationStdDev'];
 
         if (!item.value) return null;
 

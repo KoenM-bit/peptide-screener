@@ -9,11 +9,11 @@ interface ExportToolsProps {
   onSelectNone: () => void;
 }
 
-export function ExportTools({ 
-  data, 
+export function ExportTools({
+  data,
   selectedPeptides,
   onSelectAll,
-  onSelectNone 
+  onSelectNone,
 }: ExportToolsProps) {
   const exportCSV = () => {
     const peptidesToExport = data.filter(p => selectedPeptides.has(p.fragment));
@@ -23,9 +23,11 @@ export function ExportTools({
     }
 
     // Collect dynamic binding affinity keys from the selected peptides
-    const bindingKeys = Array.from(new Set(
-      peptidesToExport.flatMap(p => Object.keys(p['Peptide Binding'] || {}))
-    )).sort();
+    const bindingKeys = Array.from(
+      new Set(
+        peptidesToExport.flatMap(p => Object.keys(p['Peptide Binding'] || {}))
+      )
+    ).sort();
 
     const headers = [
       'Fragment',
@@ -37,11 +39,14 @@ export function ExportTools({
       'Subcellular Location',
       'TAU Score',
       'Signal Peptide',
-      ...bindingKeys
+      ...bindingKeys,
     ];
 
     const csvData = peptidesToExport.map(row => {
-      const binding = (row['Peptide Binding'] || {}) as Record<string, string | number>;
+      const binding = (row['Peptide Binding'] || {}) as Record<
+        string,
+        string | number
+      >;
       return [
         row.fragment,
         row.Gene,
@@ -52,7 +57,7 @@ export function ExportTools({
         row['Subcellular location'],
         row['TAU score - Tissue'],
         row['Signal Peptide Sequence'],
-        ...bindingKeys.map(k => (binding[k] ?? ''))
+        ...bindingKeys.map(k => binding[k] ?? ''),
       ];
     });
 
@@ -64,7 +69,7 @@ export function ExportTools({
 
     const csv = [
       headers.map(formatCell).join(','),
-      ...csvData.map(row => row.map(formatCell).join(','))
+      ...csvData.map(row => row.map(formatCell).join(',')),
     ].join('\n');
 
     const blob = new Blob([csv], { type: 'text/csv' });
@@ -88,7 +93,7 @@ export function ExportTools({
           <Download className="w-4 h-4" />
           Export Selected ({selectedPeptides.size})
         </button>
-        
+
         <div className="flex items-center gap-2">
           <button
             onClick={onSelectAll}

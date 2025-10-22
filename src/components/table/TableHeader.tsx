@@ -6,7 +6,10 @@ interface TableHeaderProps {
   setGlobalFilter: (value: string) => void;
 }
 
-export function TableHeader({ globalFilter, setGlobalFilter }: TableHeaderProps) {
+export function TableHeader({
+  globalFilter,
+  setGlobalFilter,
+}: TableHeaderProps) {
   return (
     <div className="mb-4 relative">
       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">

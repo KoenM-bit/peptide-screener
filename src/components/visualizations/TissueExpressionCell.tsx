@@ -6,7 +6,10 @@ interface TissueExpressionCellProps {
   value: number;
 }
 
-export function TissueExpressionCell({ tissueName, value }: TissueExpressionCellProps) {
+export function TissueExpressionCell({
+  tissueName,
+  value,
+}: TissueExpressionCellProps) {
   return (
     <div
       className="p-2 rounded transition-colors duration-200 hover:opacity-90"

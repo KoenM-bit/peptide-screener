@@ -1,5 +1,13 @@
 import React from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+} from 'recharts';
 import { PeptideData } from '../types/PeptideData';
 
 interface DataVisualizerProps {
@@ -7,15 +15,20 @@ interface DataVisualizerProps {
 }
 
 export function DataVisualizer({ data }: DataVisualizerProps) {
-  const evidenceDistribution = data.reduce((acc: Record<string, number>, curr) => {
-    acc[curr.Evidence] = (acc[curr.Evidence] || 0) + 1;
-    return acc;
-  }, {});
+  const evidenceDistribution = data.reduce(
+    (acc: Record<string, number>, curr) => {
+      acc[curr.Evidence] = (acc[curr.Evidence] || 0) + 1;
+      return acc;
+    },
+    {}
+  );
 
-  const chartData = Object.entries(evidenceDistribution).map(([name, value]) => ({
-    name,
-    count: value,
-  }));
+  const chartData = Object.entries(evidenceDistribution).map(
+    ([name, value]) => ({
+      name,
+      count: value,
+    })
+  );
 
   return (
     <div className="p-4">

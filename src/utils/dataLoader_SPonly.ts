@@ -17,7 +17,10 @@ export async function debugPeptideFiles(): Promise<void> {
     if (fileList.success && fileList.files.length > 0) {
       // Try to read one file as a test
       const testFile = fileList.files[0];
-      const fileData = await electron.ipcRenderer.invoke('read-peptide-file', testFile);
+      const fileData = await electron.ipcRenderer.invoke(
+        'read-peptide-file',
+        testFile
+      );
       console.log('Test file read result:', fileData);
     }
   } catch (error) {
@@ -614,7 +617,7 @@ async function getPeptideFiles(): Promise<string[]> {
     'AVLDGIFCV.json',
     'FLVETGFHHV.json',
     'FLAPVAGTPA.json',
-    'IAVGIHLLL.json'
+    'IAVGIHLLL.json',
   ];
 }
 
@@ -637,7 +640,9 @@ export async function loadPeptideData(): Promise<Record<string, PeptideData>> {
 
     for (let i = 0; i < batches.length; i++) {
       const batch = batches[i];
-      console.log(`Loading batch ${i+1}/${batches.length} (${batch.length} files)`);
+      console.log(
+        `Loading batch ${i + 1}/${batches.length} (${batch.length} files)`
+      );
 
       // Load current batch in parallel
       const loadPromises = batch.map(filename => loadPeptideFile(filename));
@@ -650,14 +655,18 @@ export async function loadPeptideData(): Promise<Record<string, PeptideData>> {
         }
       });
 
-      console.log(`Completed batch ${i+1}, ${Object.keys(allData).length} peptides loaded so far`);
+      console.log(
+        `Completed batch ${i + 1}, ${Object.keys(allData).length} peptides loaded so far`
+      );
     }
 
     const loadedCount = Object.keys(allData).length;
     console.log(`Successfully loaded ${loadedCount} peptides`);
 
     if (loadedCount === 0) {
-      console.error('No peptide data could be loaded. Check file paths and formats.');
+      console.error(
+        'No peptide data could be loaded. Check file paths and formats.'
+      );
       throw new Error('No peptide data could be loaded');
     }
 

@@ -13,7 +13,7 @@ export function GeneInfo({
   geneName,
   geneDescription,
   molecularFunction,
-  diseaseInvolvement
+  diseaseInvolvement,
 }: GeneInfoProps) {
   return (
     <div className="bg-white rounded-lg p-4 shadow-md">
@@ -29,14 +29,18 @@ export function GeneInfo({
               <Microscope className="w-4 h-4 text-blue-500" />
               <span className="font-medium">Molecular Function</span>
             </div>
-            <p className="text-sm text-gray-600">{molecularFunction || 'Not specified'}</p>
+            <p className="text-sm text-gray-600">
+              {molecularFunction || 'Not specified'}
+            </p>
           </div>
           <div className="p-3 bg-gray-50 rounded">
             <div className="flex items-center gap-2 mb-2">
               <Activity className="w-4 h-4 text-blue-500" />
               <span className="font-medium">Disease Involvement</span>
             </div>
-            <p className="text-sm text-gray-600">{diseaseInvolvement || 'Not specified'}</p>
+            <p className="text-sm text-gray-600">
+              {diseaseInvolvement || 'Not specified'}
+            </p>
           </div>
         </div>
       </div>

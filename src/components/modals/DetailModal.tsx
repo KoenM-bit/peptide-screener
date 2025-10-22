@@ -12,7 +12,7 @@ export function DetailModal({ peptide, onClose }: DetailModalProps) {
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto">
       <div className="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:p-0">
-        <div 
+        <div
           className="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75"
           onClick={onClose}
         />

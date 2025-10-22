@@ -9,8 +9,13 @@ interface LoadingProgressProps {
   message?: string;
 }
 
-export function LoadingProgress({ progress, message = 'Loading...' }: LoadingProgressProps) {
-  const percentage = progress ? Math.round((progress.loaded / progress.total) * 100) : 0;
+export function LoadingProgress({
+  progress,
+  message = 'Loading...',
+}: LoadingProgressProps) {
+  const percentage = progress
+    ? Math.round((progress.loaded / progress.total) * 100)
+    : 0;
 
   return (
     <div className="min-h-64 flex items-center justify-center p-8">
@@ -20,9 +25,7 @@ export function LoadingProgress({ progress, message = 'Loading...' }: LoadingPro
           <h3 className="text-lg font-semibold text-gray-900 mb-2">
             Loading Peptide Data
           </h3>
-          <p className="text-gray-600 text-sm">
-            {message}
-          </p>
+          <p className="text-gray-600 text-sm">{message}</p>
         </div>
 
         {progress && (
@@ -38,7 +41,9 @@ export function LoadingProgress({ progress, message = 'Loading...' }: LoadingPro
             {/* Progress text */}
             <div className="text-sm text-gray-600">
               <div className="flex justify-between items-center">
-                <span>{progress.loaded} of {progress.total} files</span>
+                <span>
+                  {progress.loaded} of {progress.total} files
+                </span>
                 <span>{percentage}%</span>
               </div>
               {progress.current !== 'Complete' && (

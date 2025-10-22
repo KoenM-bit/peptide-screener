@@ -14,7 +14,7 @@ export function HLABindingChart({ bindings, title }: HLABindingChartProps) {
     <div className="space-y-2">
       <h4 className="text-sm font-medium text-gray-700">{title}</h4>
       <div className="space-y-1">
-        {bindings.map((binding) => {
+        {bindings.map(binding => {
           const colors = getBindingColor(binding.bindingLevel);
           return (
             <div

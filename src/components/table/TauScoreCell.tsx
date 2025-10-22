@@ -11,7 +11,7 @@ export function TauScoreCell({ score, onClick }: TauScoreCellProps) {
   const numericScore = typeof score === 'string' ? parseFloat(score) : score;
   const { background, text } = getTauScoreColor(numericScore);
   const displayValue = formatTauScore(numericScore);
-  
+
   return (
     <button
       onClick={onClick}

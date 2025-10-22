@@ -10,7 +10,7 @@ export function TauScoreFilter({ value, onChange }: TauScoreFilterProps) {
   const ranges = [
     { label: 'Low specificity', range: [0, 0.3], color: 'bg-green-500' },
     { label: 'Medium specificity', range: [0.3, 0.7], color: 'bg-yellow-500' },
-    { label: 'High specificity', range: [0.7, 1], color: 'bg-red-500' }
+    { label: 'High specificity', range: [0.7, 1], color: 'bg-red-500' },
   ];
 
   const handleRangeClick = (range: [number, number]) => {
@@ -38,16 +38,20 @@ export function TauScoreFilter({ value, onChange }: TauScoreFilterProps) {
             key={label}
             onClick={() => handleRangeClick(range)}
             className={`flex items-center justify-between w-full p-2 rounded-lg border transition-all
-              ${getActiveRange()?.label === label 
-                ? 'border-blue-500 bg-blue-50' 
-                : 'border-gray-200 hover:border-gray-300'}`}
+              ${
+                getActiveRange()?.label === label
+                  ? 'border-blue-500 bg-blue-50'
+                  : 'border-gray-200 hover:border-gray-300'
+              }`}
           >
             <div className="flex items-center gap-3">
               <div className={`w-3 h-3 rounded-full ${color}`} />
               <span className="text-sm font-medium">{label}</span>
             </div>
             <div className="flex items-center gap-2 text-sm text-gray-500">
-              <span>{range[0].toFixed(1)} - {range[1].toFixed(1)}</span>
+              <span>
+                {range[0].toFixed(1)} - {range[1].toFixed(1)}
+              </span>
               <ChevronRight className="w-4 h-4" />
             </div>
           </button>
@@ -66,7 +70,7 @@ export function TauScoreFilter({ value, onChange }: TauScoreFilterProps) {
               max={1}
               step={0.1}
               value={value[0]}
-              onChange={(e) => onChange([parseFloat(e.target.value), value[1]])}
+              onChange={e => onChange([parseFloat(e.target.value), value[1]])}
               className="w-full accent-blue-500"
             />
           </div>
@@ -77,7 +81,7 @@ export function TauScoreFilter({ value, onChange }: TauScoreFilterProps) {
               max={1}
               step={0.1}
               value={value[1]}
-              onChange={(e) => onChange([value[0], parseFloat(e.target.value)])}
+              onChange={e => onChange([value[0], parseFloat(e.target.value)])}
               className="w-full accent-blue-500"
             />
           </div>

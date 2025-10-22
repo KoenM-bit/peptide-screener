@@ -8,7 +8,7 @@ import {
   Tooltip,
   ResponsiveContainer,
   ErrorBar,
-  Legend
+  Legend,
 } from 'recharts';
 import { Activity, AlertCircle } from 'lucide-react';
 import { CancerTooltip } from './CancerTooltip';
@@ -42,14 +42,18 @@ export function CancerExpressionChart({ data }: CancerExpressionChartProps) {
         <Activity className="w-6 h-6 text-rose-500" />
         <h3 className="text-lg font-semibold">Cancer Expression Profile</h3>
       </div>
-      
+
       <div className="h-[600px]">
         <ResponsiveContainer width="100%" height="100%">
           <ComposedChart
             data={processedData}
             margin={{ top: 20, right: 30, left: 80, bottom: 120 }}
           >
-            <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" opacity={0.5} />
+            <CartesianGrid
+              strokeDasharray="3 3"
+              stroke="#e5e7eb"
+              opacity={0.5}
+            />
             <XAxis
               dataKey="name"
               angle={-45}
@@ -64,11 +68,11 @@ export function CancerExpressionChart({ data }: CancerExpressionChartProps) {
                 angle: -90,
                 position: 'insideLeft',
                 style: { fill: '#4b5563' },
-                offset: 10
+                offset: 10,
               }}
               domain={[0, maxValue]}
               tick={{ fill: '#4b5563' }}
-              tickFormatter={(value) => value.toFixed(0)}
+              tickFormatter={value => value.toFixed(0)}
             />
             <Tooltip content={<CancerTooltip />} />
             <Legend
@@ -76,7 +80,7 @@ export function CancerExpressionChart({ data }: CancerExpressionChartProps) {
               height={50}
               wrapperStyle={{
                 paddingTop: '20px',
-                bottom: '60px'
+                bottom: '60px',
               }}
             />
             <Bar

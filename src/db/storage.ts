@@ -88,10 +88,10 @@ export async function toggleLike(fragment: string): Promise<boolean> {
     const db = await initDB();
     const tx = db.transaction('likes', 'readwrite');
     const store = tx.objectStore('likes');
-    
+
     const existing = await store.get(fragment);
     const localLikes = loadFromLocalStorage();
-    
+
     if (existing || localLikes.has(fragment)) {
       await store.delete(fragment);
       localLikes.delete(fragment);

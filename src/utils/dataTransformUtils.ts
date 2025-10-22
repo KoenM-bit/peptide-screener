@@ -1,6 +1,8 @@
 import { PeptideData, FlatPeptideData } from '../types/PeptideData';
 
-export function transformPeptideData(data: Record<string, PeptideData>): FlatPeptideData[] {
+export function transformPeptideData(
+  data: Record<string, PeptideData>
+): FlatPeptideData[] {
   return Object.entries(data).map(([fragment, peptideData]) => {
     // Extract nested data
     const generalInfo = peptideData['General Information'] || {};
@@ -18,7 +20,7 @@ export function transformPeptideData(data: Record<string, PeptideData>): FlatPep
       tissueExpression,
       singleCellExpression,
       cancerExpression,
-      'TAP Prediction': tapPrediction
+      'TAP Prediction': tapPrediction,
     };
   });
 }

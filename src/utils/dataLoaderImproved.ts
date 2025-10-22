@@ -18,7 +18,10 @@ export async function debugPeptideFiles(): Promise<void> {
     if (fileList.success && fileList.files.length > 0) {
       // Try to read one file as a test
       const testFile = fileList.files[0];
-      const fileData = await electron.ipcRenderer.invoke('read-peptide-file', testFile);
+      const fileData = await electron.ipcRenderer.invoke(
+        'read-peptide-file',
+        testFile
+      );
       console.log('Test file read result:', fileData);
     }
   } catch (error) {
@@ -41,7 +44,11 @@ async function getPeptideFiles(): Promise<string[]> {
  * Load peptide data with improved error handling and progress reporting
  */
 export async function loadPeptideData(
-  onProgress?: (progress: { loaded: number; total: number; current: string }) => void
+  onProgress?: (progress: {
+    loaded: number;
+    total: number;
+    current: string;
+  }) => void
 ): Promise<Record<string, PeptideData>> {
   let allData: Record<string, PeptideData> = {};
 
@@ -64,16 +71,18 @@ export async function loadPeptideData(
 
     for (let i = 0; i < batches.length; i++) {
       const batch = batches[i];
-      console.log(`Loading batch ${i+1}/${batches.length} (${batch.length} files)`);
+      console.log(
+        `Loading batch ${i + 1}/${batches.length} (${batch.length} files)`
+      );
 
       // Load current batch with individual file progress
       for (const filename of batch) {
         try {
           if (onProgress) {
-            onProgress({ 
-              loaded: loadedCount, 
-              total: totalFiles, 
-              current: filename.replace('.json', '') 
+            onProgress({
+              loaded: loadedCount,
+              total: totalFiles,
+              current: filename.replace('.json', ''),
             });
           }
 
@@ -88,29 +97,37 @@ export async function loadPeptideData(
         }
       }
 
-      console.log(`Completed batch ${i+1}, ${Object.keys(allData).length} peptides loaded so far`);
+      console.log(
+        `Completed batch ${i + 1}, ${Object.keys(allData).length} peptides loaded so far`
+      );
     }
 
     const finalCount = Object.keys(allData).length;
-    console.log(`Successfully loaded ${finalCount} peptides from ${loadedCount} files`);
+    console.log(
+      `Successfully loaded ${finalCount} peptides from ${loadedCount} files`
+    );
 
     if (finalCount === 0) {
-      console.error('No peptide data could be loaded. Check file paths and formats.');
+      console.error(
+        'No peptide data could be loaded. Check file paths and formats.'
+      );
       throw new Error('No peptide data could be loaded');
     }
 
     // Final progress update
     if (onProgress) {
-      onProgress({ 
-        loaded: totalFiles, 
-        total: totalFiles, 
-        current: 'Complete' 
+      onProgress({
+        loaded: totalFiles,
+        total: totalFiles,
+        current: 'Complete',
       });
     }
 
     return allData;
   } catch (error) {
     console.error('Error loading peptide data:', error);
-    throw new Error(`Failed to load peptide data: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    throw new Error(
+      `Failed to load peptide data: ${error instanceof Error ? error.message : 'Unknown error'}`
+    );
   }
 }

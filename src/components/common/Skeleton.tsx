@@ -13,25 +13,33 @@ export const Skeleton = memo(function Skeleton({
   variant = 'text',
   width,
   height,
-  animation = 'pulse'
+  animation = 'pulse',
 }: SkeletonProps) {
   const baseClasses = 'bg-gray-200 rounded';
-  
+
   const variantClasses = {
     text: 'h-4',
     rectangular: 'h-32',
-    circular: 'rounded-full w-10 h-10'
+    circular: 'rounded-full w-10 h-10',
   };
 
   const animationClasses = {
     pulse: 'animate-pulse',
     wave: 'animate-pulse', // Simplified - could add custom wave animation
-    none: ''
+    none: '',
   };
 
   const style = {
-    width: width ? (typeof width === 'number' ? `${width}px` : width) : undefined,
-    height: height ? (typeof height === 'number' ? `${height}px` : height) : undefined
+    width: width
+      ? typeof width === 'number'
+        ? `${width}px`
+        : width
+      : undefined,
+    height: height
+      ? typeof height === 'number'
+        ? `${height}px`
+        : height
+      : undefined,
   };
 
   return (
@@ -53,10 +61,13 @@ export function TableSkeleton({ rows = 5 }: { rows?: number }) {
         <Skeleton width="20%" height={16} />
         <Skeleton width="20%" height={16} />
       </div>
-      
+
       {/* Table rows skeleton */}
       {Array.from({ length: rows }).map((_, index) => (
-        <div key={index} className="flex space-x-4 p-4 border-b border-gray-100">
+        <div
+          key={index}
+          className="flex space-x-4 p-4 border-b border-gray-100"
+        >
           <Skeleton width="20%" height={14} />
           <Skeleton width="15%" height={14} />
           <Skeleton width="25%" height={14} />
@@ -75,7 +86,7 @@ export function FilterPanelSkeleton() {
         <Skeleton width="30%" height={20} />
         <Skeleton width="15%" height={16} />
       </div>
-      
+
       <div className="grid md:grid-cols-3 gap-4">
         <div className="space-y-2">
           <Skeleton width="40%" height={14} />

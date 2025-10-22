@@ -16,17 +16,20 @@ function createWindow() {
     height: 800,
     webPreferences: {
       nodeIntegration: true,
-      contextIsolation: false
-    }
+      contextIsolation: false,
+    },
   });
 
   // In development, load from Vite dev server
-  const isDevelopment = process.env.NODE_ENV === 'development' || !app.isPackaged;
-  
+  const isDevelopment =
+    process.env.NODE_ENV === 'development' || !app.isPackaged;
+
   if (isDevelopment) {
     mainWindow.loadURL('http://localhost:5173');
     mainWindow.webContents.openDevTools();
-    console.log('🚀 Development mode: Loading from Vite dev server at http://localhost:5173');
+    console.log(
+      '🚀 Development mode: Loading from Vite dev server at http://localhost:5173'
+    );
   } else {
     // In production, load from built files
     mainWindow.loadFile(join(__dirname, '../../dist/index.html'));
@@ -35,7 +38,10 @@ function createWindow() {
     // mainWindow.webContents.openDevTools();
 
     // Log useful paths for debugging
-    const resourcesPath = path.join(path.dirname(app.getAppPath()), 'resources');
+    const resourcesPath = path.join(
+      path.dirname(app.getAppPath()),
+      'resources'
+    );
     console.log('Application paths:');
     console.log('- App path:', app.getAppPath());
     console.log('- Resources path:', resourcesPath);
@@ -85,11 +91,18 @@ ipcMain.handle('store-set', (event, key, value) => {
 // Add a debugging IPC to list peptide files
 ipcMain.handle('list-peptide-files', () => {
   try {
-    const resourcesPath = path.join(path.dirname(app.getAppPath()), 'resources');
+    const resourcesPath = path.join(
+      path.dirname(app.getAppPath()),
+      'resources'
+    );
     const peptidesDir = path.join(resourcesPath, 'peptides');
 
     if (!fs.existsSync(peptidesDir)) {
-      return { success: false, error: 'Directory does not exist', path: peptidesDir };
+      return {
+        success: false,
+        error: 'Directory does not exist',
+        path: peptidesDir,
+      };
     }
 
     const files = fs.readdirSync(peptidesDir);
@@ -97,7 +110,7 @@ ipcMain.handle('list-peptide-files', () => {
       success: true,
       path: peptidesDir,
       count: files.length,
-      files: files.slice(0, 20) // Return first 20 files for debugging
+      files: files.slice(0, 20), // Return first 20 files for debugging
     };
   } catch (error) {
     return { success: false, error: error.message };
@@ -107,7 +120,10 @@ ipcMain.handle('list-peptide-files', () => {
 // Add a debugging IPC to read a specific peptide file
 ipcMain.handle('read-peptide-file', (event, filename) => {
   try {
-    const resourcesPath = path.join(path.dirname(app.getAppPath()), 'resources');
+    const resourcesPath = path.join(
+      path.dirname(app.getAppPath()),
+      'resources'
+    );
     const filePath = path.join(resourcesPath, 'peptides', filename);
 
     if (!fs.existsSync(filePath)) {
@@ -120,7 +136,7 @@ ipcMain.handle('read-peptide-file', (event, filename) => {
     return {
       success: true,
       path: filePath,
-      data: jsonData
+      data: jsonData,
     };
   } catch (error) {
     return { success: false, error: error.message };

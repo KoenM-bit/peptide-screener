@@ -9,7 +9,14 @@ interface RangeFilterProps {
   step: number;
 }
 
-export function RangeFilter({ label, value, onChange, min, max, step }: RangeFilterProps) {
+export function RangeFilter({
+  label,
+  value,
+  onChange,
+  min,
+  max,
+  step,
+}: RangeFilterProps) {
   return (
     <div className="space-y-2">
       <label className="block text-sm font-medium text-gray-700">
@@ -22,7 +29,7 @@ export function RangeFilter({ label, value, onChange, min, max, step }: RangeFil
           max={max}
           step={step}
           value={value[0]}
-          onChange={(e) => onChange([parseFloat(e.target.value), value[1]])}
+          onChange={e => onChange([parseFloat(e.target.value), value[1]])}
           className="w-full"
         />
         <input
@@ -31,7 +38,7 @@ export function RangeFilter({ label, value, onChange, min, max, step }: RangeFil
           max={max}
           step={step}
           value={value[1]}
-          onChange={(e) => onChange([value[0], parseFloat(e.target.value)])}
+          onChange={e => onChange([value[0], parseFloat(e.target.value)])}
           className="w-full"
         />
       </div>

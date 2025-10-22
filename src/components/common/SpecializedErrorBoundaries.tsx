@@ -15,7 +15,8 @@ const DataErrorFallback = ({ onRetry }: { onRetry?: () => void }) => (
         Data Loading Error
       </h3>
       <p className="text-gray-600 mb-4">
-        Unable to load peptide data. This might be due to missing files or network issues.
+        Unable to load peptide data. This might be due to missing files or
+        network issues.
       </p>
       {onRetry && (
         <button
@@ -37,14 +38,18 @@ const FilterErrorFallback = () => (
       <div>
         <h4 className="font-medium">Filter Error</h4>
         <p className="text-sm">
-          The filter panel encountered an error. You can still view the data without filtering.
+          The filter panel encountered an error. You can still view the data
+          without filtering.
         </p>
       </div>
     </div>
   </div>
 );
 
-export function DataErrorBoundary({ children, onRetry }: DataErrorBoundaryProps) {
+export function DataErrorBoundary({
+  children,
+  onRetry,
+}: DataErrorBoundaryProps) {
   return (
     <ErrorBoundary
       fallback={<DataErrorFallback onRetry={onRetry} />}
@@ -60,9 +65,7 @@ export function DataErrorBoundary({ children, onRetry }: DataErrorBoundaryProps)
 
 export function FilterErrorBoundary({ children }: { children: ReactNode }) {
   return (
-    <ErrorBoundary fallback={<FilterErrorFallback />}>
-      {children}
-    </ErrorBoundary>
+    <ErrorBoundary fallback={<FilterErrorFallback />}>{children}</ErrorBoundary>
   );
 }
 

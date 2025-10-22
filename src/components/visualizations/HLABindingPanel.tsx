@@ -32,21 +32,21 @@ export function HLABindingPanel({ data }: HLABindingPanelProps) {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <HLABindingChart 
-          bindings={data.strongBinders} 
-          title="Strong Binders (≤ 50 nM)" 
+        <HLABindingChart
+          bindings={data.strongBinders}
+          title="Strong Binders (≤ 50 nM)"
         />
-        <HLABindingChart 
-          bindings={data.moderateBinders} 
-          title="Moderate Binders (≤ 500 nM)" 
+        <HLABindingChart
+          bindings={data.moderateBinders}
+          title="Moderate Binders (≤ 500 nM)"
         />
-        <HLABindingChart 
-          bindings={data.weakBinders} 
-          title="Weak Binders (≤ 5000 nM)" 
+        <HLABindingChart
+          bindings={data.weakBinders}
+          title="Weak Binders (≤ 5000 nM)"
         />
-        <HLABindingChart 
-          bindings={data.nonBinders} 
-          title="Non-binders (> 5000 nM)" 
+        <HLABindingChart
+          bindings={data.nonBinders}
+          title="Non-binders (> 5000 nM)"
         />
       </div>
     </div>

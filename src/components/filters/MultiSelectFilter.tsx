@@ -8,7 +8,12 @@ interface MultiSelectFilterProps {
   onChange: (value: string[]) => void;
 }
 
-export function MultiSelectFilter({ label, options, value, onChange }: MultiSelectFilterProps) {
+export function MultiSelectFilter({
+  label,
+  options,
+  value,
+  onChange,
+}: MultiSelectFilterProps) {
   const toggleOption = (option: string) => {
     if (value.includes(option)) {
       onChange(value.filter(v => v !== option));
@@ -19,9 +24,7 @@ export function MultiSelectFilter({ label, options, value, onChange }: MultiSele
 
   return (
     <div className="space-y-2">
-      <label className="block text-sm font-medium text-gray-700">
-        {label}
-      </label>
+      <label className="block text-sm font-medium text-gray-700">{label}</label>
       <div className="max-h-40 overflow-y-auto border rounded-md divide-y">
         {options.map(option => (
           <button
@@ -30,10 +33,13 @@ export function MultiSelectFilter({ label, options, value, onChange }: MultiSele
             className={`flex items-center w-full px-3 py-2 text-sm hover:bg-gray-50
               ${value.includes(option) ? 'bg-blue-50' : ''}`}
           >
-            <div className={`w-4 h-4 border rounded mr-2 flex items-center justify-center
+            <div
+              className={`w-4 h-4 border rounded mr-2 flex items-center justify-center
               ${value.includes(option) ? 'bg-blue-500 border-blue-500' : 'border-gray-300'}`}
             >
-              {value.includes(option) && <Check className="w-3 h-3 text-white" />}
+              {value.includes(option) && (
+                <Check className="w-3 h-3 text-white" />
+              )}
             </div>
             {option}
           </button>

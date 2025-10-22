@@ -8,12 +8,17 @@ interface TissueExpressionHeatmapProps {
   data: Record<string, number>;
 }
 
-export function TissueExpressionHeatmap({ title, data }: TissueExpressionHeatmapProps) {
+export function TissueExpressionHeatmap({
+  title,
+  data,
+}: TissueExpressionHeatmapProps) {
   if (!data || Object.keys(data).length === 0) {
     return (
       <div className="bg-white rounded-lg p-6 shadow-md">
         <h3 className="text-lg font-semibold mb-4">{title}</h3>
-        <div className="text-center text-gray-500">No expression data available</div>
+        <div className="text-center text-gray-500">
+          No expression data available
+        </div>
       </div>
     );
   }

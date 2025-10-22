@@ -11,19 +11,26 @@ import { FilterErrorBoundary } from '../components/common/SpecializedErrorBounda
 
 export function DataAnalysisView() {
   const { peptideList } = usePeptideData();
-  const [selectedPeptide, setSelectedPeptide] = useState<FlatPeptideData | null>(null);
-  const [selectedPeptides, setSelectedPeptides] = useState<Set<string>>(new Set());
+  const [selectedPeptide, setSelectedPeptide] =
+    useState<FlatPeptideData | null>(null);
+  const [selectedPeptides, setSelectedPeptides] = useState<Set<string>>(
+    new Set()
+  );
   const [filters, setFilters] = useState<FilterState>({
     tauScore: [0, 1],
     locations: [],
     hlaBinding: {
       bindingLevels: [],
-      alleles: []
+      alleles: [],
     },
-    tapScore: false
+    tapScore: false,
   });
 
-  const { data: filteredData, stats, hasActiveFilters } = useFilteredData(peptideList, filters);
+  const {
+    data: filteredData,
+    stats,
+    hasActiveFilters,
+  } = useFilteredData(peptideList, filters);
 
   const handleSelectionChange = (fragment: string, selected: boolean) => {
     const newSelection = new Set(selectedPeptides);
@@ -47,7 +54,7 @@ export function DataAnalysisView() {
   return (
     <div className="max-w-7xl mx-auto px-4 py-6 space-y-8">
       <div className="bg-white rounded-lg shadow-md">
-        <ExportTools 
+        <ExportTools
           data={filteredData}
           selectedPeptides={selectedPeptides}
           onSelectAll={handleSelectAll}
@@ -68,8 +75,8 @@ export function DataAnalysisView() {
       </FilterErrorBoundary>
 
       <div className="bg-white rounded-lg shadow-md">
-        <DataTable 
-          data={filteredData} 
+        <DataTable
+          data={filteredData}
           onRowClick={setSelectedPeptide}
           selectedPeptides={selectedPeptides}
           onSelectionChange={handleSelectionChange}

@@ -21,7 +21,7 @@ export function DataTable() {
   const { globalFilter, setGlobalFilter } = useTableSearch();
   const { peptideList, loading, error } = usePeptideData();
   const [selectedPeptide, setSelectedPeptide] = useState(null);
-  
+
   const columnHelper = createColumnHelper();
 
   const columns = [
@@ -51,7 +51,7 @@ export function DataTable() {
     }),
     columnHelper.accessor('TAU score - Tissue', {
       cell: info => (
-        <TauScoreCell 
+        <TauScoreCell
           score={parseFloat(info.getValue())}
           onClick={() => setSelectedPeptide(info.row.original)}
         />
@@ -81,19 +81,15 @@ export function DataTable() {
   }
 
   if (error) {
-    return (
-      <div className="text-center text-red-500 p-4">
-        {error}
-      </div>
-    );
+    return <div className="text-center text-red-500 p-4">{error}</div>;
   }
 
   return (
     <>
       <div className="p-4">
-        <TableHeader 
-          globalFilter={globalFilter} 
-          setGlobalFilter={setGlobalFilter} 
+        <TableHeader
+          globalFilter={globalFilter}
+          setGlobalFilter={setGlobalFilter}
         />
         <div className="overflow-x-auto">
           <table className="min-w-full bg-white shadow-md rounded-lg">
@@ -101,7 +97,10 @@ export function DataTable() {
               {table.getHeaderGroups().map(headerGroup => (
                 <tr key={headerGroup.id} className="bg-gray-100">
                   {headerGroup.headers.map(header => (
-                    <th key={header.id} className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th
+                      key={header.id}
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
                       {flexRender(
                         header.column.columnDef.header,
                         header.getContext()
@@ -113,13 +112,16 @@ export function DataTable() {
             </thead>
             <tbody>
               {table.getRowModel().rows.map(row => (
-                <tr 
-                  key={row.id} 
-                  className="hover:bg-gray-50"
-                >
+                <tr key={row.id} className="hover:bg-gray-50">
                   {row.getVisibleCells().map(cell => (
-                    <td key={cell.id} className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    <td
+                      key={cell.id}
+                      className="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
+                    >
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
                     </td>
                   ))}
                 </tr>

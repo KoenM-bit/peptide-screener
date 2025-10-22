@@ -7,10 +7,17 @@ interface FunctionInfoProps {
   diseaseInvolvement: string;
 }
 
-export function FunctionInfo({ biologicalProcess, molecularFunction, diseaseInvolvement }: FunctionInfoProps) {
+export function FunctionInfo({
+  biologicalProcess,
+  molecularFunction,
+  diseaseInvolvement,
+}: FunctionInfoProps) {
   const formatValue = (value: string) => {
     if (!value || value === 'NA') return 'Not specified';
-    return value.split(';').map(item => item.trim()).join(', ');
+    return value
+      .split(';')
+      .map(item => item.trim())
+      .join(', ');
   };
 
   return (
@@ -22,18 +29,24 @@ export function FunctionInfo({ biologicalProcess, molecularFunction, diseaseInvo
 
       <div className="space-y-4">
         <div>
-          <div className="text-sm font-medium text-gray-500">Biological Process</div>
+          <div className="text-sm font-medium text-gray-500">
+            Biological Process
+          </div>
           <div className="text-lg">{formatValue(biologicalProcess)}</div>
         </div>
 
         <div>
-          <div className="text-sm font-medium text-gray-500">Molecular Function</div>
+          <div className="text-sm font-medium text-gray-500">
+            Molecular Function
+          </div>
           <div className="text-lg">{formatValue(molecularFunction)}</div>
         </div>
 
         <div>
           <div className="flex items-center gap-2">
-            <div className="text-sm font-medium text-gray-500">Disease Involvement</div>
+            <div className="text-sm font-medium text-gray-500">
+              Disease Involvement
+            </div>
             {diseaseInvolvement && diseaseInvolvement !== 'NA' && (
               <AlertCircle className="w-4 h-4 text-red-500" />
             )}

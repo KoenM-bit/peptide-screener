@@ -770,7 +770,7 @@ export const PEPTIDE_FILES = [
   'YSDVAKRLTK.json',
   'YSQVFKETV.json',
   'YTEDNDDDLYG.json',
-  'YVAVVNVHS.json'
+  'YVAVVNVHS.json',
 ] as const;
 
-export type PeptideFileName = typeof PEPTIDE_FILES[number];
+export type PeptideFileName = (typeof PEPTIDE_FILES)[number];

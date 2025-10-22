@@ -26,7 +26,7 @@ export class ErrorBoundary extends Component<Props, State> {
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     console.error('ErrorBoundary caught an error:', error, errorInfo);
     this.setState({ errorInfo });
-    
+
     // Call optional error handler
     if (this.props.onError) {
       this.props.onError(error, errorInfo);
@@ -58,7 +58,8 @@ export class ErrorBoundary extends Component<Props, State> {
                 Something went wrong
               </h1>
               <p className="text-gray-600 mb-4">
-                An unexpected error occurred. Please try refreshing the page or return to the home page.
+                An unexpected error occurred. Please try refreshing the page or
+                return to the home page.
               </p>
             </div>
 

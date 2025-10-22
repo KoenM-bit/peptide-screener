@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
-import { SlidersHorizontal, ChevronDown, ChevronUp, XCircle } from 'lucide-react';
+import {
+  SlidersHorizontal,
+  ChevronDown,
+  ChevronUp,
+  XCircle,
+} from 'lucide-react';
 import { TauScoreFilter } from './TauScoreFilter';
 import { MultiSelectFilter } from './MultiSelectFilter';
 import { HLABindingFilter } from './HLABindingFilter';
@@ -16,33 +21,36 @@ interface FilterPanelProps {
   hasActiveFilters: boolean;
 }
 
-export function FilterPanel({ 
-  filters, 
-  onFilterChange, 
+export function FilterPanel({
+  filters,
+  onFilterChange,
   uniqueLocations,
   uniqueAlleles,
   totalCount,
   filteredCount,
-  hasActiveFilters
+  hasActiveFilters,
 }: FilterPanelProps) {
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const updateFilter = <T extends keyof FilterState>(key: T, value: FilterState[T]) => {
+  const updateFilter = <T extends keyof FilterState>(
+    key: T,
+    value: FilterState[T]
+  ) => {
     onFilterChange({
       ...filters,
-      [key]: value
+      [key]: value,
     });
   };
 
   const resetFilters = () => {
-    onFilterChange({ 
-      tauScore: [0, 1], 
+    onFilterChange({
+      tauScore: [0, 1],
       locations: [],
       hlaBinding: {
         bindingLevels: [],
-        alleles: []
+        alleles: [],
       },
-      tapScore: false
+      tapScore: false,
     });
     setIsExpanded(false);
   };
@@ -61,7 +69,7 @@ export function FilterPanel({
         </div>
         <div className="flex items-center gap-4">
           <span className="text-sm text-gray-500">
-            {hasActiveFilters 
+            {hasActiveFilters
               ? `Filtered: ${filteredCount} of ${totalCount} peptides`
               : `Showing all ${totalCount} peptides`}
           </span>
@@ -94,25 +102,25 @@ export function FilterPanel({
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <TauScoreFilter
               value={filters.tauScore}
-              onChange={(value) => updateFilter('tauScore', value)}
+              onChange={value => updateFilter('tauScore', value)}
             />
 
             <MultiSelectFilter
               label="Location"
               options={uniqueLocations}
               value={filters.locations}
-              onChange={(value) => updateFilter('locations', value)}
+              onChange={value => updateFilter('locations', value)}
             />
 
             <HLABindingFilter
               value={filters.hlaBinding}
               availableAlleles={uniqueAlleles}
-              onChange={(value) => updateFilter('hlaBinding', value)}
+              onChange={value => updateFilter('hlaBinding', value)}
             />
 
             <TAPScoreFilter
               value={filters.tapScore}
-              onChange={(value) => updateFilter('tapScore', value)}
+              onChange={value => updateFilter('tapScore', value)}
             />
           </div>
         </div>

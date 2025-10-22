@@ -1,17 +1,19 @@
 /**
  * Format a TAU score for display
  */
-export function formatTauScore(score: number | string | null | undefined): string {
+export function formatTauScore(
+  score: number | string | null | undefined
+): string {
   if (score === null || score === undefined || score === '') {
     return 'N/A';
   }
-  
+
   const numericScore = typeof score === 'string' ? parseFloat(score) : score;
-  
+
   if (isNaN(numericScore)) {
     return 'N/A';
   }
-  
+
   return numericScore.toFixed(2);
 }
 
@@ -31,7 +33,10 @@ export function formatTissueName(fieldName: string): string {
  */
 export function formatLocation(value: string | null | undefined): string {
   if (!value || value === 'NA') return 'Unknown';
-  return value.split(';').map(loc => loc.trim()).join(', ');
+  return value
+    .split(';')
+    .map(loc => loc.trim())
+    .join(', ');
 }
 
 /**
@@ -39,5 +44,8 @@ export function formatLocation(value: string | null | undefined): string {
  */
 export function formatList(value: string | null | undefined): string {
   if (!value || value === 'NA') return 'Not specified';
-  return value.split(';').map(item => item.trim()).join(', ');
+  return value
+    .split(';')
+    .map(item => item.trim())
+    .join(', ');
 }

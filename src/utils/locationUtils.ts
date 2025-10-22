@@ -11,7 +11,7 @@ export function getLocationColor(location: string): LocationData {
     return {
       background: 'bg-purple-100',
       text: 'text-purple-800',
-      icon: 'vesicle'
+      icon: 'vesicle',
     };
   }
 
@@ -19,7 +19,7 @@ export function getLocationColor(location: string): LocationData {
     return {
       background: 'bg-blue-100',
       text: 'text-blue-800',
-      icon: 'golgi'
+      icon: 'golgi',
     };
   }
 
@@ -27,18 +27,21 @@ export function getLocationColor(location: string): LocationData {
     return {
       background: 'bg-green-100',
       text: 'text-green-800',
-      icon: 'cytosol'
+      icon: 'cytosol',
     };
   }
 
   return {
     background: 'bg-gray-100',
     text: 'text-gray-800',
-    icon: 'default'
+    icon: 'default',
   };
 }
 
 export function formatLocation(value: string): string {
   if (!value || value === 'NA') return 'Unknown';
-  return value.split(';').map(loc => loc.trim()).join(', ');
+  return value
+    .split(';')
+    .map(loc => loc.trim())
+    .join(', ');
 }

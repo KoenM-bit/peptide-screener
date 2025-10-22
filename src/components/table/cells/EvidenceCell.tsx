@@ -7,9 +7,11 @@ interface EvidenceCellProps {
 
 export function EvidenceCell({ evidence }: EvidenceCellProps) {
   const { background, text } = getEvidenceColor(evidence);
-  
+
   return (
-    <div className={`inline-flex px-2 py-1 rounded-full text-sm ${background} ${text}`}>
+    <div
+      className={`inline-flex px-2 py-1 rounded-full text-sm ${background} ${text}`}
+    >
       {evidence || 'Unknown'}
     </div>
   );

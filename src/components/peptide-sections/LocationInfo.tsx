@@ -7,7 +7,10 @@ interface LocationInfoProps {
   subcellularMainLocation: string;
 }
 
-export function LocationInfo({ subcellularLocation, subcellularMainLocation }: LocationInfoProps) {
+export function LocationInfo({
+  subcellularLocation,
+  subcellularMainLocation,
+}: LocationInfoProps) {
   const mainLocationData = getLocationColor(subcellularMainLocation);
   const detailedLocationData = getLocationColor(subcellularLocation);
 
@@ -33,18 +36,30 @@ export function LocationInfo({ subcellularLocation, subcellularMainLocation }: L
 
       <div className="space-y-4">
         <div>
-          <div className="text-sm font-medium text-gray-500 mb-2">Main Location</div>
-          <div className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg ${mainLocationData.background} ${mainLocationData.text}`}>
+          <div className="text-sm font-medium text-gray-500 mb-2">
+            Main Location
+          </div>
+          <div
+            className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg ${mainLocationData.background} ${mainLocationData.text}`}
+          >
             {getIcon(mainLocationData.icon)}
-            <span className="text-lg">{formatLocation(subcellularMainLocation)}</span>
+            <span className="text-lg">
+              {formatLocation(subcellularMainLocation)}
+            </span>
           </div>
         </div>
 
         <div>
-          <div className="text-sm font-medium text-gray-500 mb-2">Detailed Location</div>
-          <div className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg ${detailedLocationData.background} ${detailedLocationData.text}`}>
+          <div className="text-sm font-medium text-gray-500 mb-2">
+            Detailed Location
+          </div>
+          <div
+            className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg ${detailedLocationData.background} ${detailedLocationData.text}`}
+          >
             {getIcon(detailedLocationData.icon)}
-            <span className="text-lg">{formatLocation(subcellularLocation)}</span>
+            <span className="text-lg">
+              {formatLocation(subcellularLocation)}
+            </span>
           </div>
         </div>
       </div>

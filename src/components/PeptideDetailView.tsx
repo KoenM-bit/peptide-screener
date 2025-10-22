@@ -25,14 +25,14 @@ export function PeptideDetailView({ data }: PeptideDetailViewProps) {
         geneDescription={data['Gene description']}
         evidence={data.Evidence}
       />
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <FunctionInfo
           biologicalProcess={data['Biological process'] || 'NA'}
           molecularFunction={data['Molecular function']}
           diseaseInvolvement={data['Disease involvement']}
         />
-        
+
         <LocationInfo
           subcellularLocation={data['Subcellular location']}
           subcellularMainLocation={data['Subcellular main location']}
@@ -51,11 +51,11 @@ export function PeptideDetailView({ data }: PeptideDetailViewProps) {
       <HLABindingPanel data={bindingData} />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <TissueExpressionHeatmap 
+        <TissueExpressionHeatmap
           title="Tissue Expression"
-          data={data.tissueExpression} 
+          data={data.tissueExpression}
         />
-        <TissueExpressionHeatmap 
+        <TissueExpressionHeatmap
           title="Single Cell Expression"
           data={data.singleCellExpression}
         />

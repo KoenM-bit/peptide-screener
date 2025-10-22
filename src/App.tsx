@@ -4,12 +4,20 @@ import { NavBar } from './components/navigation/NavBar';
 import { usePeptideData } from './hooks/usePeptideData';
 import { ErrorBoundary } from './components/common/ErrorBoundary';
 import { DataErrorBoundary } from './components/common/SpecializedErrorBoundaries';
-import { LoadingProgress, SimpleLoader } from './components/common/LoadingProgress';
-import { LazyDataAnalysisView, LazyCandidatesView } from './utils/lazyComponents';
+import {
+  LoadingProgress,
+  SimpleLoader,
+} from './components/common/LoadingProgress';
+import {
+  LazyDataAnalysisView,
+  LazyCandidatesView,
+} from './utils/lazyComponents';
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [currentView, setCurrentView] = useState<'analysis' | 'candidates'>('analysis');
+  const [currentView, setCurrentView] = useState<'analysis' | 'candidates'>(
+    'analysis'
+  );
   const { loading, error, progress, refetch } = usePeptideData();
 
   useEffect(() => {
@@ -27,21 +35,19 @@ export default function App() {
     <ErrorBoundary>
       <div className="min-h-screen bg-gray-100">
         <NavBar currentView={currentView} onViewChange={setCurrentView} />
-        
+
         <main>
           {loading ? (
             <div className="max-w-7xl mx-auto px-4 py-6">
               <div className="bg-white rounded-lg shadow-md">
-                <LoadingProgress 
-                  progress={progress || undefined} 
+                <LoadingProgress
+                  progress={progress || undefined}
                   message="Loading peptide database..."
                 />
               </div>
             </div>
           ) : error ? (
-            <div className="text-center text-red-500 p-4">
-              {error}
-            </div>
+            <div className="text-center text-red-500 p-4">{error}</div>
           ) : (
             <DataErrorBoundary onRetry={refetch}>
               <Suspense fallback={<SimpleLoader message="Loading view..." />}>

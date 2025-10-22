@@ -8,9 +8,9 @@ interface TAPPredictionBadgeProps {
 
 export function TAPPredictionBadge({ score }: TAPPredictionBadgeProps) {
   const isGoodScore = score >= 0.5;
-  
+
   return (
-    <div 
+    <div
       className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-sm font-medium
         ${isGoodScore ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}
     >
