@@ -22,6 +22,7 @@ if (typeof global.URL === 'undefined') {
     toString() {
       return this.href;
     }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } as any;
 }
 
@@ -46,6 +47,7 @@ if (typeof global.URLSearchParams === 'undefined') {
     set(name: string, value: string) {
       this.params.set(name, value);
     }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } as any;
 }
 
