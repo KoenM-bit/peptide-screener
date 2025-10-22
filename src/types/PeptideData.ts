@@ -3,6 +3,10 @@ export interface TAPPrediction {
   pred_affinity: number;
 }
 
+export interface GeneralInformation {
+  [key: string]: string | number | undefined;
+}
+
 export interface PeptideData {
   'General Information': GeneralInformation;
   'Peptide Binding': {
@@ -10,18 +14,22 @@ export interface PeptideData {
   };
   'Tissue Expression': Record<string, number>;
   'Single Cell Expression': Record<string, number>;
-  'Cancer Expression': Record<string, any>;
+  'Cancer Expression': Record<string, unknown>;
   'TAP Prediction': TAPPrediction;
 }
 
-export interface FlatPeptideData extends GeneralInformation {
+export interface GeneralInformation {
+  [key: string]: unknown;
+}
+
+export interface FlatPeptideData {
   fragment: string;
   'Peptide Binding': {
     [key: string]: string | number;
   };
   tissueExpression: Record<string, number>;
   singleCellExpression: Record<string, number>;
-  cancerExpression: Record<string, any>;
+  cancerExpression: Record<string, unknown>;
   'TAP Prediction': TAPPrediction;
   rowNumber?: number;
 }

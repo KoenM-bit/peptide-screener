@@ -12,7 +12,6 @@ interface GeneInfoProps {
 export function GeneInfo({
   geneName,
   geneDescription,
-  biologicalProcess,
   molecularFunction,
   diseaseInvolvement
 }: GeneInfoProps) {

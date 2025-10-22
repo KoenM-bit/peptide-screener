@@ -11,12 +11,11 @@ import {
   Legend
 } from 'recharts';
 import { Activity, AlertCircle } from 'lucide-react';
-import { ProcessedCancerData } from '../../types/CancerTypes';
 import { CancerTooltip } from './CancerTooltip';
 import { useCancerData } from '../../hooks/useCancerData';
 
 interface CancerExpressionChartProps {
-  data: Record<string, any>;
+  data: Record<string, unknown>;
 }
 
 export function CancerExpressionChart({ data }: CancerExpressionChartProps) {

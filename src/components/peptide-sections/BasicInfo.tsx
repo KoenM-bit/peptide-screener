@@ -1,5 +1,5 @@
 import React from 'react';
-import { FileText, Database } from 'lucide-react';
+import { Database } from 'lucide-react';
 
 interface BasicInfoProps {
   fragment: string;
@@ -13,7 +13,6 @@ export function BasicInfo({
   fragment, 
   gene, 
   geneDescription, 
-  evidence,
   signalPeptide 
 }: BasicInfoProps) {
   return (

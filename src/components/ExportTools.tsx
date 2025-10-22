@@ -1,5 +1,5 @@
 import React from 'react';
-import { Download, Check } from 'lucide-react';
+import { Download } from 'lucide-react';
 import { FlatPeptideData } from '../types/PeptideData';
 
 interface ExportToolsProps {
@@ -24,7 +24,7 @@ export function ExportTools({
 
     // Collect dynamic binding affinity keys from the selected peptides
     const bindingKeys = Array.from(new Set(
-      peptidesToExport.flatMap(p => Object.keys(((p as any)['Peptide Binding']) || {}))
+      peptidesToExport.flatMap(p => Object.keys(p['Peptide Binding'] || {}))
     )).sort();
 
     const headers = [
@@ -41,7 +41,7 @@ export function ExportTools({
     ];
 
     const csvData = peptidesToExport.map(row => {
-      const binding = (((row as any)['Peptide Binding']) || {}) as Record<string, string | number>;
+      const binding = (row['Peptide Binding'] || {}) as Record<string, string | number>;
       return [
         row.fragment,
         row.Gene,

@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { ProcessedCancerData } from '../types/CancerTypes';
 
-export function useCancerData(data: Record<string, any>) {
+export function useCancerData(data: Record<string, unknown>) {
   return useMemo(() => {
     const processedData: ProcessedCancerData[] = Object.entries(data).map(([name, value]) => ({
       name: name.split(' ').length > 3 

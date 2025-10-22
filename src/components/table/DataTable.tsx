@@ -27,7 +27,7 @@ interface DataTableProps {
   onSelectionChange?: (fragment: string, selected: boolean) => void;
 }
 
-export function DataTable({ data, onRowClick, selectedPeptides, onSelectionChange }: DataTableProps) {
+export function DataTable({ data, onRowClick }: DataTableProps) {
   const { globalFilter, setGlobalFilter } = useTableSearch();
   const { likedPeptides, togglePeptideLike } = useLikedPeptides();
   const columnHelper = createColumnHelper<FlatPeptideData>();

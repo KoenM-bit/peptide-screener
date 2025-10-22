@@ -23,7 +23,7 @@ const HLA_GROUPS = {
   'HLA-C': ['HLA-C*07:01', 'HLA-C*07:02']
 };
 
-export function HLABindingFilter({ value, availableAlleles, onChange }: HLABindingFilterProps) {
+export function HLABindingFilter({ value, onChange }: HLABindingFilterProps) {
   const toggleBindingLevel = (level: string) => {
     const newLevels = value.bindingLevels.includes(level)
       ? value.bindingLevels.filter(l => l !== level)

@@ -41,7 +41,7 @@ export async function loadPeptideFile(filename: string): Promise<Record<string, 
             return { [peptideId]: jsonData }; // Wrap it with the peptideId
           }
         }
-      } catch (e) {
+      } catch {
         // Just try the next path
       }
     }

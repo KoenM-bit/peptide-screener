@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Filter, SlidersHorizontal, ChevronDown, ChevronUp, XCircle, Shield } from 'lucide-react';
+import { SlidersHorizontal, ChevronDown, ChevronUp, XCircle } from 'lucide-react';
 import { TauScoreFilter } from './TauScoreFilter';
 import { MultiSelectFilter } from './MultiSelectFilter';
 import { HLABindingFilter } from './HLABindingFilter';
@@ -27,7 +27,7 @@ export function FilterPanel({
 }: FilterPanelProps) {
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const updateFilter = (key: keyof FilterState, value: any) => {
+  const updateFilter = <T extends keyof FilterState>(key: T, value: FilterState[T]) => {
     onFilterChange({
       ...filters,
       [key]: value
