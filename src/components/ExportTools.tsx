@@ -22,6 +22,11 @@ export function ExportTools({
       return;
     }
 
+    // Collect dynamic binding affinity keys from the selected peptides
+    const bindingKeys = Array.from(new Set(
+      peptidesToExport.flatMap(p => Object.keys(((p as any)['Peptide Binding']) || {}))
+    )).sort();
+
     const headers = [
       'Fragment',
       'Gene',
@@ -31,30 +36,35 @@ export function ExportTools({
       'Evidence',
       'Subcellular Location',
       'TAU Score',
-      'Signal Peptide'
+      'Signal Peptide',
+      ...bindingKeys
     ];
 
-    const csvData = peptidesToExport.map(row => [
-      row.fragment,
-      row.Gene,
-      row['Gene description'],
-      row['Molecular function'],
-      row['Disease involvement'],
-      row.Evidence,
-      row['Subcellular location'],
-      row['TAU score - Tissue'],
-      row['Signal Peptide Sequence']
-    ]);
-    
+    const csvData = peptidesToExport.map(row => {
+      const binding = (((row as any)['Peptide Binding']) || {}) as Record<string, string | number>;
+      return [
+        row.fragment,
+        row.Gene,
+        row['Gene description'],
+        row['Molecular function'],
+        row['Disease involvement'],
+        row.Evidence,
+        row['Subcellular location'],
+        row['TAU score - Tissue'],
+        row['Signal Peptide Sequence'],
+        ...bindingKeys.map(k => (binding[k] ?? ''))
+      ];
+    });
+
+    const formatCell = (value: unknown) => {
+      const s = value === null || value === undefined ? '' : String(value);
+      const escaped = s.replace(/"/g, '""');
+      return /[",\n]/.test(escaped) ? `"${escaped}"` : escaped;
+    };
+
     const csv = [
-      headers.join(','),
-      ...csvData.map(row => 
-        row.map(value => 
-          typeof value === 'string' && value.includes(',') 
-            ? `"${value}"` 
-            : value
-        ).join(',')
-      )
+      headers.map(formatCell).join(','),
+      ...csvData.map(row => row.map(formatCell).join(','))
     ].join('\n');
 
     const blob = new Blob([csv], { type: 'text/csv' });

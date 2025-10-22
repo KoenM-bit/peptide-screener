@@ -7,6 +7,8 @@ export function transformPeptideData(data: Record<string, PeptideData>): FlatPep
     const peptideBinding = peptideData['Peptide Binding'] || {};
     const tissueExpression = peptideData['Tissue Expression'] || {};
     const singleCellExpression = peptideData['Single Cell Expression'] || {};
+    const cancerExpression = peptideData['Cancer Expression'] || {};
+    const tapPrediction = peptideData['TAP Prediction'] || null;
 
     // Flatten the structure
     return {
@@ -14,7 +16,9 @@ export function transformPeptideData(data: Record<string, PeptideData>): FlatPep
       ...generalInfo,
       'Peptide Binding': peptideBinding,
       tissueExpression,
-      singleCellExpression
+      singleCellExpression,
+      cancerExpression,
+      'TAP Prediction': tapPrediction
     };
   });
 }

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Filter, SlidersHorizontal, ChevronDown, ChevronUp, XCircle } from 'lucide-react';
+import { Filter, SlidersHorizontal, ChevronDown, ChevronUp, XCircle, Shield } from 'lucide-react';
 import { TauScoreFilter } from './TauScoreFilter';
 import { MultiSelectFilter } from './MultiSelectFilter';
 import { HLABindingFilter } from './HLABindingFilter';
+import { TAPScoreFilter } from './TAPScoreFilter';
 import { FilterState } from '../../types/FilterTypes';
 
 interface FilterPanelProps {
@@ -40,7 +41,8 @@ export function FilterPanel({
       hlaBinding: {
         bindingLevels: [],
         alleles: []
-      }
+      },
+      tapScore: false
     });
     setIsExpanded(false);
   };
@@ -106,6 +108,11 @@ export function FilterPanel({
               value={filters.hlaBinding}
               availableAlleles={uniqueAlleles}
               onChange={(value) => updateFilter('hlaBinding', value)}
+            />
+
+            <TAPScoreFilter
+              value={filters.tapScore}
+              onChange={(value) => updateFilter('tapScore', value)}
             />
           </div>
         </div>

@@ -9,7 +9,8 @@ export function useFilteredData(data: FlatPeptideData[], filters: FilterState) {
       filters.tauScore[0] > 0 || 
       filters.tauScore[1] < 1 ||
       filters.hlaBinding.bindingLevels.length > 0 ||
-      filters.hlaBinding.alleles.length > 0;
+      filters.hlaBinding.alleles.length > 0 ||
+      filters.tapScore;
 
     let filteredData = data;
     
@@ -17,6 +18,7 @@ export function useFilteredData(data: FlatPeptideData[], filters: FilterState) {
       filteredData = data.filter(peptide => {
         const tauScore = parseFloat(peptide['TAU score - Tissue']);
         const location = peptide['Subcellular location'];
+        const tapScore = peptide['TAP Prediction']?.pred_score ?? 0;
 
         // Check TAU score
         const matchesTauScore = !isNaN(tauScore) && 
@@ -34,7 +36,10 @@ export function useFilteredData(data: FlatPeptideData[], filters: FilterState) {
           filters.hlaBinding.alleles
         );
 
-        return matchesTauScore && matchesLocation && matchesBinding;
+        // Check TAP score
+        const matchesTapScore = !filters.tapScore || tapScore >= 0.5;
+
+        return matchesTauScore && matchesLocation && matchesBinding && matchesTapScore;
       });
     }
 

@@ -5,6 +5,7 @@ export interface FilterState {
     bindingLevels: ('Strong' | 'Moderate' | 'Weak' | 'Non-binder')[];
     alleles: string[];
   };
+  tapScore: boolean;
 }
 
 export interface FilteredStats {

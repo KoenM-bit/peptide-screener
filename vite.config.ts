@@ -1,10 +1,25 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import electron from 'vite-plugin-electron';
+import renderer from 'vite-plugin-electron-renderer';
+import { resolve } from 'path';
 
-// https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
-  optimizeDeps: {
-    exclude: ['lucide-react'],
-  },
+  plugins: [
+    react(),
+    electron({
+      entry: 'src/electron/main.js',
+      vite: {
+        build: {
+          outDir: 'dist/electron'
+        }
+      }
+    }),
+    renderer()
+  ],
+  base: './',
+  build: {
+    outDir: 'dist',
+    emptyOutDir: true
+  }
 });

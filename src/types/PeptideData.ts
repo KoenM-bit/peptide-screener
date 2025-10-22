@@ -1,14 +1,6 @@
-export interface GeneralInformation {
-  Gene: string;
-  'Gene description': string;
-  Evidence: string;
-  'RNA tissue specificity': string;
-  'RNA tissue distribution': string;
-  'RNA tissue specificity score': string;
-  'TAU score - Tissue': string;
-  'Signal Peptide Sequence'?: string;
-  'Subcellular location'?: string;
-  'Subcellular main location'?: string;
+export interface TAPPrediction {
+  pred_score: number;
+  pred_affinity: number;
 }
 
 export interface PeptideData {
@@ -18,7 +10,8 @@ export interface PeptideData {
   };
   'Tissue Expression': Record<string, number>;
   'Single Cell Expression': Record<string, number>;
-  'Cancer Expression'?: Record<string, number>; // Added Cancer Expression
+  'Cancer Expression': Record<string, any>;
+  'TAP Prediction': TAPPrediction;
 }
 
 export interface FlatPeptideData extends GeneralInformation {
@@ -28,6 +21,7 @@ export interface FlatPeptideData extends GeneralInformation {
   };
   tissueExpression: Record<string, number>;
   singleCellExpression: Record<string, number>;
-  cancerExpression?: Record<string, number>; // Added Cancer Expression
+  cancerExpression: Record<string, any>;
+  'TAP Prediction': TAPPrediction;
   rowNumber?: number;
 }

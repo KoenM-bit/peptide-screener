@@ -1,22 +1,36 @@
 {
   "name": "peptide-analysis-app",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.1.2",
+  "description": "An application for peptide analysis",
+  "author": "Koen Marijt",
+  "main": "src/electron/main.js",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "tsc && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "lint:fix": "eslint . --fix",
+    "preview": "vite preview",
+    "electron:dev": "concurrently \"vite\" \"electron src/electron/main.js\"",
+    "electron:build": "tsc && vite build && electron-builder",
+    "electron:build:win": "tsc && vite build && electron-builder --windows --x64",
+    "electron:build:mac": "tsc && vite build && electron-builder --mac",
+    "electron:build:linux": "tsc && vite build && electron-builder --linux",
+    "test": "echo \"No tests specified\" && exit 0",
+    "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,css,md}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,js,jsx,json,css,md}\"",
+    "postinstall": "electron-builder install-app-dependencies"
   },
   "dependencies": {
+    "@tanstack/react-table": "^8.13.2",
+    "electron-store": "^8.1.0",
+    "idb": "^8.0.0",
     "lucide-react": "^0.344.0",
+    "papaparse": "^5.4.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "papaparse": "^5.4.1",
-    "recharts": "^2.12.2",
-    "@tanstack/react-table": "^8.13.2",
-    "idb": "^8.0.0"
+    "recharts": "^2.12.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.1",
@@ -25,14 +39,65 @@
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
     "autoprefixer": "^10.4.18",
+    "concurrently": "^8.2.2",
+    "electron": "^29.1.0",
+    "electron-builder": "^24.12.0",
     "eslint": "^9.9.1",
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
     "eslint-plugin-react-refresh": "^0.4.11",
     "globals": "^15.9.0",
     "postcss": "^8.4.35",
+    "prettier": "^3.6.2",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.3.0",
-    "vite": "^5.4.2"
+    "vite": "^5.4.2",
+    "vite-plugin-electron": "^0.28.4",
+    "vite-plugin-electron-renderer": "^0.14.5"
+  },
+  "build": {
+    "appId": "com.peptideanalyzer.app",
+    "productName": "Peptide Analyzer",
+    "directories": {
+      "output": "dist_electron"
+    },
+    "files": [
+      "dist/**/*",
+      "src/electron/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "public/peptides",
+        "to": "peptides"
+      }
+    ],
+    "mac": {
+      "category": "public.app-category.scientific"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "public/icon.ico",
+      "artifactName": "${productName}-Setup-${version}.${ext}",
+      "publisherName": "Koen Marijt",
+      "requestedExecutionLevel": "asInvoker"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "installerIcon": "public/icon.ico",
+      "uninstallerIcon": "public/icon.ico"
+    },
+    "linux": {
+      "target": "AppImage"
+    }
   }
 }

@@ -1,3 +1,4 @@
+// Update PeptideDetailView to include cancer expression
 import React from 'react';
 import { TissueExpressionHeatmap } from './visualizations/TissueExpressionHeatmap';
 import { CancerExpressionChart } from './visualizations/CancerExpressionChart';
@@ -45,6 +46,8 @@ export function PeptideDetailView({ data }: PeptideDetailViewProps) {
         tauScore={parseFloat(data['TAU score - Tissue'])}
       />
 
+      <CancerExpressionChart data={data.cancerExpression} />
+
       <HLABindingPanel data={bindingData} />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -57,8 +60,6 @@ export function PeptideDetailView({ data }: PeptideDetailViewProps) {
           data={data.singleCellExpression}
         />
       </div>
-
-      <CancerExpressionChart data={data.cancerExpression} />
     </div>
   );
 }

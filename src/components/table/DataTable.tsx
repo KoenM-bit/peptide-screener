@@ -15,6 +15,7 @@ import { GeneCell } from './cells/GeneCell';
 import { TauScoreCell } from './cells/TauScoreCell';
 import { BindingStatusCell } from './cells/BindingStatusCell';
 import { LikeCell } from './cells/LikeCell';
+import { TAPPredictionBadge } from '../visualizations/TAPPredictionBadge';
 import { useTableSearch } from '../../hooks/useTableSearch';
 import { useLikedPeptides } from '../../hooks/useLikedPeptides';
 import { FlatPeptideData } from '../../types/PeptideData';
@@ -49,6 +50,20 @@ export function DataTable({ data, onRowClick, selectedPeptides, onSelectionChang
       cell: info => <FragmentCell fragment={info.getValue()} />,
       header: 'Fragment',
       size: 120,
+    }),
+    columnHelper.accessor('TAP Prediction', {
+      cell: info => {
+        const tapData = info.getValue();
+        if (!tapData) return null;
+        return (
+          <TAPPredictionBadge 
+            score={tapData.pred_score} 
+            affinity={tapData.pred_affinity}
+          />
+        );
+      },
+      header: 'TAP Prediction',
+      size: 180,
     }),
     columnHelper.accessor('Peptide Binding', {
       id: 'bindingStatus',
