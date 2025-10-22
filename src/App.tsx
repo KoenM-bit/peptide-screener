@@ -4,11 +4,13 @@ import { CandidatesView } from './views/CandidatesView';
 import { LoginPage } from './components/auth/LoginPage';
 import { NavBar } from './components/navigation/NavBar';
 import { usePeptideData } from './hooks/usePeptideData';
+import { ErrorBoundary } from './components/common/ErrorBoundary';
+import { DataErrorBoundary } from './components/common/SpecializedErrorBoundaries';
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [currentView, setCurrentView] = useState<'analysis' | 'candidates'>('analysis');
-  const { loading, error } = usePeptideData();
+  const { loading, error, refetch } = usePeptideData();
 
   useEffect(() => {
     const auth = localStorage.getItem('isAuthenticated');
@@ -22,26 +24,30 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      <NavBar currentView={currentView} onViewChange={setCurrentView} />
-      
-      <main>
-        {loading ? (
-          <div className="flex items-center justify-center h-64">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500" />
-          </div>
-        ) : error ? (
-          <div className="text-center text-red-500 p-4">
-            {error}
-          </div>
-        ) : (
-          currentView === 'analysis' ? (
-            <DataAnalysisView />
+    <ErrorBoundary>
+      <div className="min-h-screen bg-gray-100">
+        <NavBar currentView={currentView} onViewChange={setCurrentView} />
+        
+        <main>
+          {loading ? (
+            <div className="flex items-center justify-center h-64">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500" />
+            </div>
+          ) : error ? (
+            <div className="text-center text-red-500 p-4">
+              {error}
+            </div>
           ) : (
-            <CandidatesView />
-          )
-        )}
-      </main>
-    </div>
+            <DataErrorBoundary onRetry={refetch}>
+              {currentView === 'analysis' ? (
+                <DataAnalysisView />
+              ) : (
+                <CandidatesView />
+              )}
+            </DataErrorBoundary>
+          )}
+        </main>
+      </div>
+    </ErrorBoundary>
   );
 }

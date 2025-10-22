@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { DataTable } from '../components/table/DataTable';
 import { DetailModal } from '../components/modals/DetailModal';
 import { ExportTools } from '../components/ExportTools';
@@ -7,6 +7,7 @@ import { usePeptideData } from '../hooks/usePeptideData';
 import { useFilteredData } from '../hooks/useFilteredData';
 import { FilterState } from '../types/FilterTypes';
 import { FlatPeptideData } from '../types/PeptideData';
+import { FilterErrorBoundary } from '../components/common/SpecializedErrorBoundaries';
 
 export function DataAnalysisView() {
   const { peptideList } = usePeptideData();
@@ -18,7 +19,8 @@ export function DataAnalysisView() {
     hlaBinding: {
       bindingLevels: [],
       alleles: []
-    }
+    },
+    tapScore: false
   });
 
   const { data: filteredData, stats, hasActiveFilters } = useFilteredData(peptideList, filters);
@@ -43,7 +45,7 @@ export function DataAnalysisView() {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="max-w-7xl mx-auto px-4 py-6 space-y-8">
       <div className="bg-white rounded-lg shadow-md">
         <ExportTools 
           data={filteredData}
@@ -53,15 +55,17 @@ export function DataAnalysisView() {
         />
       </div>
 
-      <FilterPanel
-        filters={filters}
-        onFilterChange={setFilters}
-        uniqueLocations={stats.uniqueLocations}
-        uniqueAlleles={stats.uniqueAlleles}
-        totalCount={stats.total}
-        filteredCount={stats.filtered}
-        hasActiveFilters={hasActiveFilters}
-      />
+      <FilterErrorBoundary>
+        <FilterPanel
+          filters={filters}
+          onFilterChange={setFilters}
+          uniqueLocations={stats.uniqueLocations}
+          uniqueAlleles={stats.uniqueAlleles}
+          totalCount={stats.total}
+          filteredCount={stats.filtered}
+          hasActiveFilters={hasActiveFilters}
+        />
+      </FilterErrorBoundary>
 
       <div className="bg-white rounded-lg shadow-md">
         <DataTable 
