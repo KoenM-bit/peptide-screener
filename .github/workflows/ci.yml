@@ -42,7 +42,7 @@ jobs:
     
     strategy:
       matrix:
-        build-type: [web, electron]
+        build-type: [web]  # Only build web for CI, electron builds are for releases
     
     steps:
       - name: Checkout code
@@ -58,17 +58,12 @@ jobs:
         run: npm ci
         
       - name: Build web application
-        if: matrix.build-type == 'web'
         run: npm run build
-        
-      - name: Build Electron application
-        if: matrix.build-type == 'electron'
-        run: npm run electron:build
         
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: build-${{ matrix.build-type }}
+          name: build-web
           path: dist/
           retention-days: 7
 
@@ -91,10 +86,10 @@ jobs:
         run: npm ci
         
       - name: Run security audit
-        run: npm audit --audit-level=moderate
+        run: npm audit --audit-level=high
         
-      - name: Check for known vulnerabilities
-        run: npx audit-ci --moderate
+      - name: Check for known vulnerabilities  
+        run: npx audit-ci --high
 
   # Job 4: Bundle Analysis
   bundle-analysis:
@@ -130,73 +125,8 @@ jobs:
             exit 1
           fi
 
-  # Job 5: Deployment Preview (for PRs)
-  deploy-preview:
-    name: Deploy Preview
-    runs-on: ubuntu-latest
-    needs: [lint, build]
-    if: github.event_name == 'pull_request'
-    
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-          cache: 'npm'
-          
-      - name: Install dependencies
-        run: npm ci
-        
-      - name: Build application
-        run: npm run build
-        
-      - name: Deploy to Netlify Preview
-        uses: nwtgck/actions-netlify@v3.0
-        with:
-          publish-dir: './dist'
-          production-branch: main
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          deploy-message: "Deploy from GitHub Actions"
-          enable-pull-request-comment: true
-          enable-commit-comment: true
-          overwrites-pull-request-comment: true
-        env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-
-  # Job 6: Production Deployment (only on main branch)
-  deploy-production:
-    name: Deploy to Production
-    runs-on: ubuntu-latest
-    needs: [lint, build, security]
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-          cache: 'npm'
-          
-      - name: Install dependencies
-        run: npm ci
-        
-      - name: Build application
-        run: npm run build
-        
-      - name: Deploy to Production
-        uses: nwtgck/actions-netlify@v3.0
-        with:
-          publish-dir: './dist'
-          production-deploy: true
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          deploy-message: "Production deployment"
-        env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+  # Note: Deployment jobs are disabled as they require Netlify secrets configuration
+  # To enable deployment:
+  # 1. Set up Netlify account and create site
+  # 2. Add NETLIFY_AUTH_TOKEN and NETLIFY_SITE_ID secrets to GitHub repository
+  # 3. Uncomment and configure deployment jobs

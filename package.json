@@ -65,39 +65,16 @@
       "dist/**/*",
       "src/electron/**/*"
     ],
-    "extraResources": [
-      {
-        "from": "public/peptides",
-        "to": "peptides"
-      }
-    ],
     "mac": {
-      "category": "public.app-category.scientific"
+      "category": "public.app-category.developer-tools"
     },
     "win": {
-      "target": [
-        {
-          "target": "nsis",
-          "arch": [
-            "x64"
-          ]
-        }
-      ],
-      "icon": "public/icon.ico",
-      "artifactName": "${productName}-Setup-${version}.${ext}",
-      "publisherName": "Koen Marijt",
-      "requestedExecutionLevel": "asInvoker"
-    },
-    "nsis": {
-      "oneClick": false,
-      "allowToChangeInstallationDirectory": true,
-      "createDesktopShortcut": true,
-      "createStartMenuShortcut": true,
-      "installerIcon": "public/icon.ico",
-      "uninstallerIcon": "public/icon.ico"
+      "target": "nsis",
+      "artifactName": "${productName}-Setup-${version}.${ext}"
     },
     "linux": {
-      "target": "AppImage"
+      "target": "AppImage",
+      "category": "Development"
     }
   }
 }
