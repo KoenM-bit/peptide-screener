@@ -11,12 +11,26 @@ const store = new Store();
 let mainWindow;
 
 function createWindow() {
+  // Set up preload script path
+  let preloadPath;
+  if (app.isPackaged) {
+    preloadPath = join(process.resourcesPath, 'app.asar', 'dist-electron', 'preload.js');
+    if (!fs.existsSync(preloadPath)) {
+      preloadPath = join(__dirname, 'preload.js');
+    }
+  } else {
+    preloadPath = join(__dirname, 'preload.js');
+  }
+
   mainWindow = new BrowserWindow({
     width: 1200,
     height: 800,
     webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false,
+      nodeIntegration: false,
+      contextIsolation: true,
+      enableRemoteModule: false,
+      webSecurity: true,
+      preload: preloadPath,
     },
   });
 
@@ -32,7 +46,52 @@ function createWindow() {
     );
   } else {
     // In production, load from built files
-    mainWindow.loadFile(join(__dirname, '../../dist/index.html'));
+    let htmlPath;
+    
+    if (app.isPackaged) {
+      // When packaged, the files are in the Resources directory
+      htmlPath = join(process.resourcesPath, 'app.asar', 'dist', 'index.html');
+      
+      // Check if asar path exists, if not try without asar
+      if (!fs.existsSync(htmlPath)) {
+        htmlPath = join(process.resourcesPath, 'app', 'dist', 'index.html');
+      }
+      
+      // If still not found, try relative to the executable
+      if (!fs.existsSync(htmlPath)) {
+        htmlPath = join(__dirname, '../dist/index.html');
+      }
+    } else {
+      htmlPath = join(__dirname, '../../dist/index.html');
+    }
+    
+    console.log('Loading HTML from:', htmlPath);
+    console.log('File exists:', fs.existsSync(htmlPath));
+    
+    if (fs.existsSync(htmlPath)) {
+      mainWindow.loadFile(htmlPath);
+    } else {
+      console.error('HTML file not found at:', htmlPath);
+      // Fallback: try to load a simple error page or create one
+      const errorHtml = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>Peptide Analyzer - Error</title>
+          <style>
+            body { font-family: Arial, sans-serif; text-align: center; margin-top: 100px; }
+            .error { color: #d32f2f; }
+          </style>
+        </head>
+        <body>
+          <h1 class="error">Application Error</h1>
+          <p>Could not load the application. Please try reinstalling.</p>
+          <p>Expected path: ${htmlPath}</p>
+        </body>
+        </html>
+      `;
+      mainWindow.loadURL(`data:text/html;charset=utf-8,${encodeURIComponent(errorHtml)}`);
+    }
 
     // Open DevTools in production for debugging file access issues
     // mainWindow.webContents.openDevTools();

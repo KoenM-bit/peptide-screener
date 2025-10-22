@@ -4,7 +4,7 @@
   "version": "1.1.2",
   "description": "An application for peptide analysis",
   "author": "Koen Marijt",
-  "main": "src/electron/main.js",
+  "main": "dist-electron/main.js",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -75,10 +75,52 @@
     },
     "files": [
       "dist/**/*",
-      "src/electron/**/*"
+      "dist-electron/**/*",
+      "!dist-electron/builder-*",
+      "!dist-electron/*.blockmap",
+      "!dist-electron/*.yaml",
+      "!dist-electron/*.yml",
+      "!**/node_modules/*/{CHANGELOG.md,README.md,README,readme.md,readme}",
+      "!**/node_modules/*/{test,__tests__,tests,powered-test,example,examples}",
+      "!**/node_modules/*.d.ts",
+      "!**/node_modules/.bin",
+      "!**/*.{iml,o,hprof,orig,pyc,pyo,rbc,swp,csproj,sln,xproj}",
+      "!.editorconfig",
+      "!**/._*",
+      "!**/{.DS_Store,.git,.hg,.svn,CVS,RCS,SCCS,.gitignore,.gitattributes}",
+      "!**/{__pycache__,thumbs.db,.flowconfig,.idea,.vs,.nyc_output}",
+      "!**/{appveyor.yml,.travis.yml,circle.yml}",
+      "!**/{npm-debug.log,yarn.lock,.yarn-integrity,.yarn-metadata.json}"
+    ],
+    "extraResources": [
+      {
+        "from": "public/peptides",
+        "to": "peptides",
+        "filter": ["**/*.json"]
+      }
+    ],
+    "asar": true,
+    "asarUnpack": [
+      "dist/**/*"
     ],
     "mac": {
-      "category": "public.app-category.developer-tools"
+      "category": "public.app-category.developer-tools",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": "arm64"
+        },
+        {
+          "target": "zip",
+          "arch": "arm64"
+        }
+      ],
+      "extendInfo": {
+        "NSAppTransportSecurity": {
+          "NSAllowsArbitraryLoads": false,
+          "NSAllowsLocalNetworking": true
+        }
+      }
     },
     "win": {
       "target": "nsis",

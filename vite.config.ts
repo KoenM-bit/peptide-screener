@@ -10,7 +10,10 @@ export default defineConfig({
       entry: 'src/electron/main.js',
       vite: {
         build: {
-          outDir: 'dist/electron'
+          outDir: 'dist-electron',
+          rollupOptions: {
+            external: ['electron']
+          }
         }
       }
     }),
@@ -19,6 +22,15 @@ export default defineConfig({
   base: './',
   build: {
     outDir: 'dist',
-    emptyOutDir: true
+    emptyOutDir: true,
+    assetsDir: 'assets',
+    rollupOptions: {
+      output: {
+        manualChunks: undefined
+      }
+    }
+  },
+  server: {
+    port: 5173
   }
 });
