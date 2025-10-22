@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { DataAnalysisView } from './views/DataAnalysisView';
-import { CandidatesView } from './views/CandidatesView';
+import React, { useState, useEffect, Suspense } from 'react';
 import { LoginPage } from './components/auth/LoginPage';
 import { NavBar } from './components/navigation/NavBar';
 import { usePeptideData } from './hooks/usePeptideData';
 import { ErrorBoundary } from './components/common/ErrorBoundary';
 import { DataErrorBoundary } from './components/common/SpecializedErrorBoundaries';
-import { LoadingProgress } from './components/common/LoadingProgress';
+import { LoadingProgress, SimpleLoader } from './components/common/LoadingProgress';
+import { LazyDataAnalysisView, LazyCandidatesView } from './utils/lazyComponents';
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -45,11 +44,13 @@ export default function App() {
             </div>
           ) : (
             <DataErrorBoundary onRetry={refetch}>
-              {currentView === 'analysis' ? (
-                <DataAnalysisView />
-              ) : (
-                <CandidatesView />
-              )}
+              <Suspense fallback={<SimpleLoader message="Loading view..." />}>
+                {currentView === 'analysis' ? (
+                  <LazyDataAnalysisView />
+                ) : (
+                  <LazyCandidatesView />
+                )}
+              </Suspense>
             </DataErrorBoundary>
           )}
         </main>
