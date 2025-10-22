@@ -23,6 +23,8 @@
     "test:ui": "vitest --ui",
     "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,css,md}\"",
     "format:check": "prettier --check \"src/**/*.{ts,tsx,js,jsx,json,css,md}\"",
+    "clean": "rm -rf node_modules dist dist_electron",
+    "fresh-start": "npm run clean && npm install && npm run ci:local",
     "ci:local": "./scripts/local-ci.sh",
     "postinstall": "node -e \"try { require('electron-builder/out/cli/cli.js') } catch (e) { process.exit(0) }\" && electron-builder install-app-dependencies || true"
   },
