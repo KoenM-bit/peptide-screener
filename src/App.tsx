@@ -6,11 +6,12 @@ import { NavBar } from './components/navigation/NavBar';
 import { usePeptideData } from './hooks/usePeptideData';
 import { ErrorBoundary } from './components/common/ErrorBoundary';
 import { DataErrorBoundary } from './components/common/SpecializedErrorBoundaries';
+import { LoadingProgress } from './components/common/LoadingProgress';
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [currentView, setCurrentView] = useState<'analysis' | 'candidates'>('analysis');
-  const { loading, error, refetch } = usePeptideData();
+  const { loading, error, progress, refetch } = usePeptideData();
 
   useEffect(() => {
     const auth = localStorage.getItem('isAuthenticated');
@@ -30,8 +31,13 @@ export default function App() {
         
         <main>
           {loading ? (
-            <div className="flex items-center justify-center h-64">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500" />
+            <div className="max-w-7xl mx-auto px-4 py-6">
+              <div className="bg-white rounded-lg shadow-md">
+                <LoadingProgress 
+                  progress={progress || undefined} 
+                  message="Loading peptide database..."
+                />
+              </div>
             </div>
           ) : error ? (
             <div className="text-center text-red-500 p-4">
