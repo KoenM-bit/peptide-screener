@@ -10,6 +10,19 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./src/test/setup.ts'],
     include: ['src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
+    pool: 'forks',
+    poolOptions: {
+      forks: {
+        singleFork: true,
+      },
+    },
+    deps: {
+      optimizer: {
+        web: {
+          exclude: ['whatwg-url', 'webidl-conversions'],
+        },
+      },
+    },
     exclude: [
       'node_modules',
       'dist',
