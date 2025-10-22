@@ -20,6 +20,7 @@
     "test": "echo \"No tests specified\" && exit 0",
     "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,css,md}\"",
     "format:check": "prettier --check \"src/**/*.{ts,tsx,js,jsx,json,css,md}\"",
+    "ci:local": "./scripts/local-ci.sh",
     "postinstall": "node -e \"try { require('electron-builder/out/cli/cli.js') } catch (e) { process.exit(0) }\" && electron-builder install-app-dependencies || true"
   },
   "dependencies": {
