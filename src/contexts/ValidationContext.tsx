@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import React, { createContext, useContext, ReactNode } from 'react';
 import { useValidatedPeptideData, UseValidatedPeptideDataReturn } from '../hooks/useValidatedPeptideData';
 
@@ -46,11 +47,13 @@ export function useValidation() {
 }
 
 // HOC for components that need validation
-export function withValidation<P extends object>(
+export const withValidation = <P extends object>(
   Component: React.ComponentType<P>
-) {
-  return function ValidationWrappedComponent(props: P) {
+) => {
+  const ValidationWrappedComponent = (props: P) => {
     const validation = useValidation();
     return <Component {...props} validation={validation} />;
   };
-}
+  ValidationWrappedComponent.displayName = `withValidation(${Component.displayName || Component.name})`;
+  return ValidationWrappedComponent;
+};
