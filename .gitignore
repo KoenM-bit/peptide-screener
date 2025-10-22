@@ -47,3 +47,7 @@ pids
 
 # Electron-builder output
 build/
+
+# datbase files
+public/data.json
+public/data_backup.json
